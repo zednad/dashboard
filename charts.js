@@ -62,6 +62,8 @@ class ChartManager {
         this.createOutageDistributionChart();
         this.createQuarterlyChart();
         this.createServicesChart();
+        this.createBankOutageMinutesChart();
+        this.createInfraOutageMinutesChart();
     }
     
     // Create horizontal outage distribution bar chart
@@ -318,6 +320,88 @@ class ChartManager {
                             }
                         }
                     }
+                }
+            }
+        });
+    }
+    
+    createBankOutageMinutesChart() {
+        const ctx = document.getElementById('bankOutageMinutesChart').getContext('2d');
+        const data = window.analytics.getBankOutageMinutes();
+
+        if (this.charts.bankOutageMinutes) {
+            this.charts.bankOutageMinutes.destroy();
+        }
+
+        this.charts.bankOutageMinutes = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+                ...this.defaultOptions,
+                plugins: {
+                    ...this.defaultOptions.plugins,
+                    legend: { display: false },
+                    tooltip: {
+                        ...this.defaultOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.parsed.y.toLocaleString()} minutes`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ...this.defaultOptions.scales.y,
+                        title: {
+                            display: true,
+                            text: 'Total Minutes',
+                            color: '#666',
+                            font: { size: 10, weight: '600' }
+                        }
+                    },
+                    x: { ...this.defaultOptions.scales.x }
+                }
+            }
+        });
+    }
+
+    createInfraOutageMinutesChart() {
+        const ctx = document.getElementById('infraOutageMinutesChart').getContext('2d');
+        const data = window.analytics.getInfraOutageMinutes();
+
+        if (this.charts.infraOutageMinutes) {
+            this.charts.infraOutageMinutes.destroy();
+        }
+
+        this.charts.infraOutageMinutes = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+                ...this.defaultOptions,
+                plugins: {
+                    ...this.defaultOptions.plugins,
+                    legend: { display: false },
+                    tooltip: {
+                        ...this.defaultOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.parsed.y.toLocaleString()} minutes`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ...this.defaultOptions.scales.y,
+                        title: {
+                            display: true,
+                            text: 'Total Minutes',
+                            color: '#666',
+                            font: { size: 10, weight: '600' }
+                        }
+                    },
+                    x: { ...this.defaultOptions.scales.x }
                 }
             }
         });

@@ -548,10 +548,56 @@ class BankAnalytics {
     }
     
     // NEW ANALYTICS METHODS FOR ADDITIONAL CHARTS
+    getOutageMinutes(dataType) {
+        const filteredContext = this.getFilteredData(); // provides filtered banks, quarters, services
+        const originalData = this.data.processedData;
+        const labels = filteredContext.banks;
     
-
+        const outageMinutes = labels.map(bank => {
+            let totalMinutes = 0;
+            if (!originalData[bank]) return 0;
     
+            filteredContext.quarters.forEach(quarter => {
+                if (!originalData[bank][quarter]) return;
+    
+                filteredContext.services.forEach(service => {
+                    if (originalData[bank][quarter] && originalData[bank][quarter][service]) {
+                        totalMinutes += originalData[bank][quarter][service][dataType] || 0;
+                    }
+                });
+            });
+            return totalMinutes;
+        });
 
+        const backgroundColors = labels.map(bank => {
+            const colors = {
+                'ANZ': '#1f77b4',
+                'Commbank': '#ff7f0e',
+                'NAB': '#d62728',
+                'Westpac': '#2ca02c'
+            };
+            return colors[bank] || '#106ebe';
+        });
+
+        const datasetLabel = dataType === 'outageBank' ? 'Outage Minutes (Bank Fault)' : 'Outage Minutes (Infrastructure)';
+
+        return {
+            labels: labels,
+            datasets: [{
+                label: datasetLabel,
+                data: outageMinutes,
+                backgroundColor: backgroundColors
+            }]
+        };
+    }
+
+    getBankOutageMinutes() {
+        return this.getOutageMinutes('outageBank');
+    }
+
+    getInfraOutageMinutes() {
+        return this.getOutageMinutes('outageInfra');
+    }
 }
 
 // Initialize analytics
