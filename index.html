@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Australian Banks Payment Service Outage Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1><i class="fas fa-chart-line"></i> Australian Big 4 Banks Payment Service Outage Analysis</h1>
+                <div class="period-indicator">Q1 2023 - Q1 2025 (9 Quarters)</div>
+                <div class="header-controls">
+                    <div class="filter-indicator" id="filterIndicator">
+                        <i class="fas fa-filter"></i>
+                        <div id="filterTags">
+                            <!-- Individual filter tags will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    <button class="clear-filters" id="clearFilters">Clear All Filters</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- All Cards in One Row -->
+        <section class="metrics-overview">
+            <div class="all-cards-row">
+                <div class="metric-card anz-card compact" id="anzCard">
+                    <div class="metric-header">
+                        <i class="fas fa-bank"></i>
+                        <h3>ANZ</h3>
+                    </div>
+                    <div class="metric-value" id="anz-outage-rate">-</div>
+                    <div class="metric-sub-value" id="anz-total-outages">- total outages</div>
+                </div>
+                
+                <div class="metric-card commbank-card compact" id="commbankCard">
+                    <div class="metric-header">
+                        <i class="fas fa-bank"></i>
+                        <h3>Commbank</h3>
+                    </div>
+                    <div class="metric-value" id="commbank-outage-rate">-</div>
+                    <div class="metric-sub-value" id="commbank-total-outages">- total outages</div>
+                </div>
+                
+                <div class="metric-card nab-card compact" id="nabCard">
+                    <div class="metric-header">
+                        <i class="fas fa-bank"></i>
+                        <h3>NAB</h3>
+                    </div>
+                    <div class="metric-value" id="nab-outage-rate">-</div>
+                    <div class="metric-sub-value" id="nab-total-outages">- total outages</div>
+                </div>
+                
+                <div class="metric-card westpac-card compact" id="westpacCard">
+                    <div class="metric-header">
+                        <i class="fas fa-bank"></i>
+                        <h3>Westpac</h3>
+                    </div>
+                    <div class="metric-value" id="westpac-outage-rate">-</div>
+                    <div class="metric-sub-value" id="westpac-total-outages">- total outages</div>
+                </div>
+                
+                <div class="metric-card big4-card compact selected" id="big4Card">
+                    <div class="metric-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Big 4 Average</h3>
+                    </div>
+                    <div class="metric-value" id="big4-outage-rate">-</div>
+                    <div class="metric-sub-value" id="big4-total-outages">- total outages</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="dashboard-grid">
+            <!-- Charts Grid -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2><i class="fas fa-chart-bar"></i> Outage Distribution</h2>
+                    <p class="chart-subtitle">Outages by bank for selected period</p>
+                </div>
+                <div class="chart-content">
+                    <canvas id="outageDistributionChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2><i class="fas fa-calendar"></i> Quarterly Outage Trends</h2>
+                    <p class="chart-subtitle">Outage patterns across quarters</p>
+                </div>
+                <div class="chart-content">
+                    <canvas id="quarterlyChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2><i class="fas fa-cogs"></i> Payment Services Outages</h2>
+                    <p class="chart-subtitle">Total outages by service type</p>
+                </div>
+                <div class="chart-content">
+                    <canvas id="servicesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Insights -->
+            <div class="analysis-container">
+                <div class="chart-header">
+                    <h2><i class="fas fa-search"></i> Key Insights</h2>
+                </div>
+                <div class="insights-grid" id="insightsContainer">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>Data Analysis Dashboard - Australian Banking Payment Services | Generated: <span id="timestamp"></span></p>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="analytics.js"></script>
+    <script src="charts.js"></script>
+    <script src="main.js"></script>
+</body>
+</html> 

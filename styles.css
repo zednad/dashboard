@@ -1,0 +1,733 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    color: #212529;
+    line-height: 1.4;
+    min-height: 100vh;
+    overflow-x: auto;
+}
+
+.dashboard-container {
+    width: 100vw;
+    height: 100vh;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Header Styles - Power BI Style */
+.dashboard-header {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.header-content h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #323130;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.header-content h1 i {
+    color: #106ebe;
+    font-size: 1.2rem;
+}
+
+.period-indicator {
+    background: #106ebe;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+/* Filter Indicator */
+.filter-indicator {
+    background: #f3f2f1;
+    border: 1px solid #e1dfdd;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    color: #323130;
+    display: none;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-indicator.active {
+    display: flex;
+}
+
+#filterTags {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.filter-tag {
+    background: #106ebe;
+    color: white;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.filter-tag.bank-filter {
+    background: #106ebe;
+}
+
+.filter-tag.quarter-filter {
+    background: #2ca02c;
+}
+
+.filter-tag.service-filter {
+    background: #ff7f0e;
+}
+
+.filter-tag-close {
+    cursor: pointer;
+    font-size: 0.6rem;
+    margin-left: 2px;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.filter-tag-close:hover {
+    opacity: 1;
+    font-weight: bold;
+}
+
+.clear-filters {
+    background: #d13438;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    display: none;
+}
+
+.clear-filters.active {
+    display: block;
+}
+
+/* Metrics Overview - Single Row */
+.metrics-overview {
+    margin-bottom: 8px;
+}
+
+.all-cards-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+/* Metric Card Styling - Power BI Style */
+.metric-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Compact card styling for single row layout */
+.metric-card.compact {
+    padding: 8px;
+    min-height: 80px;
+}
+
+.metric-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-color: #106ebe;
+}
+
+.metric-card.selected {
+    border-color: #106ebe;
+    box-shadow: 0 0 0 1px #106ebe;
+    background: #f8fbff;
+}
+
+/* Individual Bank Card Colors */
+.metric-card.anz-card {
+    border-left: 4px solid #1f77b4;
+}
+
+.metric-card.anz-card.selected {
+    background: #f0f7ff;
+    border-color: #1f77b4;
+    box-shadow: 0 0 0 1px #1f77b4;
+}
+
+.metric-card.commbank-card {
+    border-left: 4px solid #ff7f0e;
+}
+
+.metric-card.commbank-card.selected {
+    background: #fff8f0;
+    border-color: #ff7f0e;
+    box-shadow: 0 0 0 1px #ff7f0e;
+}
+
+.metric-card.nab-card {
+    border-left: 4px solid #d13438;
+}
+
+.metric-card.nab-card.selected {
+    background: #fef7f7;
+    border-color: #d13438;
+    box-shadow: 0 0 0 1px #d13438;
+}
+
+.metric-card.westpac-card {
+    border-left: 4px solid #2ca02c;
+}
+
+.metric-card.westpac-card.selected {
+    background: #f7fff7;
+    border-color: #2ca02c;
+    box-shadow: 0 0 0 1px #2ca02c;
+}
+
+.metric-card.big4-card {
+    border-left: 4px solid #106ebe;
+}
+
+.metric-card.big4-card.selected {
+    background: #f8fbff;
+    border-color: #106ebe;
+    box-shadow: 0 0 0 1px #106ebe;
+}
+
+.metric-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.metric-header i {
+    color: #106ebe;
+    font-size: 0.7rem;
+}
+
+.metric-header h3 {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #323130;
+}
+
+.metric-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1px;
+    color: #323130;
+    line-height: 1;
+}
+
+.metric-sub-value {
+    font-size: 0.55rem;
+    color: #605e5c;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.metric-label {
+    font-size: 0.6rem;
+    color: #605e5c;
+    font-weight: 500;
+}
+
+/* Compact specific adjustments */
+.metric-card.compact .metric-header {
+    margin-bottom: 3px;
+}
+
+.metric-card.compact .metric-value {
+    font-size: 1.2rem;
+}
+
+.metric-card.compact .metric-sub-value {
+    font-size: 0.5rem;
+}
+
+.metric-card.compact .metric-label {
+    display: none; /* Hide labels in compact mode */
+}
+
+/* Dashboard Grid - Updated for new layout */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr auto;
+    gap: 8px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+/* Bottom row layout */
+.insights-container.compact {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    grid-column: 1;
+    max-height: 200px;
+}
+
+.insights-grid.compact {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.insights-grid.compact .insight-card {
+    padding: 4px 6px;
+    font-size: 0.7rem;
+}
+
+.insights-grid.compact .insight-card .insight-header {
+    margin-bottom: 2px;
+}
+
+.insights-grid.compact .insight-card .insight-header h4 {
+    font-size: 0.65rem;
+}
+
+.insights-grid.compact .insight-card p {
+    font-size: 0.6rem;
+    line-height: 1.2;
+}
+
+.outage-minutes-container {
+    grid-column: 2 / 4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.outage-minutes-container .chart-container {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-height: 200px;
+}
+
+.outage-minutes-container .chart-content canvas {
+    max-height: 140px !important;
+}
+
+/* Chart containers */
+.chart-container {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.chart-container.wide {
+    grid-column: span 3;
+}
+
+.chart-container.tall {
+    grid-row: span 2;
+}
+
+.chart-header {
+    margin-bottom: 8px;
+}
+
+.chart-header h2 {
+    font-size: 0.9rem;
+    margin: 0;
+    color: #323130;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.chart-header h2 i {
+    font-size: 0.8rem;
+    color: #106ebe;
+}
+
+.chart-subtitle {
+    font-size: 0.65rem;
+    color: #605e5c;
+    margin: 2px 0 0 0;
+}
+
+.chart-content {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+}
+
+.chart-content canvas {
+    max-height: 200px !important;
+}
+
+
+
+/* Analysis/Insights container */
+.analysis-container {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.insights-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.insight-card {
+    background: #f8f9fa;
+    border-radius: 4px;
+    padding: 8px;
+    border-left: 3px solid #106ebe;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.insight-card:hover {
+    background: #f3f2f1;
+    border-left-color: #005a9e;
+}
+
+.insight-card h3 {
+    color: #323130;
+    margin-bottom: 4px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.insight-card h3 i {
+    font-size: 0.6rem;
+}
+
+.insight-card p {
+    color: #605e5c;
+    font-size: 0.65rem;
+    line-height: 1.3;
+}
+
+.insight-positive { border-left-color: #27ae60; }
+.insight-negative { border-left-color: #e74c3c; }
+.insight-neutral { border-left-color: #f39c12; }
+
+/* Footer - Power BI Style */
+.dashboard-footer {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px 16px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: #605e5c;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive Design - Power BI Optimized */
+@media (max-width: 1400px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 1fr);
+    }
+    
+    .chart-container.tall {
+        grid-row: span 1;
+    }
+}
+
+@media (max-width: 1000px) {
+    .dashboard-container {
+        padding: 8px;
+        gap: 6px;
+    }
+    
+    .header-content {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .header-content h1 {
+        font-size: 1.2rem;
+    }
+    
+    .metrics-overview {
+        grid-template-columns: repeat(2, 1fr);
+        height: 120px;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+    }
+    
+    .chart-container.tall {
+        grid-row: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .metrics-overview {
+        grid-template-columns: 1fr;
+        height: 200px;
+    }
+    
+    .chart-container {
+        min-height: 250px;
+    }
+    
+    canvas {
+        max-height: 150px !important;
+    }
+    
+    .header-content h1 {
+        font-size: 1rem;
+    }
+    
+    .period-indicator, .filter-indicator {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+    }
+}
+
+/* Animation Classes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #3498db;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.mb-20 { margin-bottom: 20px; }
+.mt-20 { margin-top: 20px; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+} 
+
+/* Print Styles for PDF Export */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+    
+    .dashboard-container {
+        width: 100% !important;
+        height: auto !important;
+        padding: 10px !important;
+        page-break-inside: avoid;
+    }
+    
+    .dashboard-header {
+        background: white !important;
+        border: 1px solid #000 !important;
+        page-break-after: avoid;
+        margin-bottom: 15px !important;
+    }
+    
+    .metrics-overview {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        margin-bottom: 15px !important;
+        page-break-after: avoid;
+    }
+    
+    .metric-card {
+        background: white !important;
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        padding: 8px !important;
+    }
+    
+    .dashboard-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: auto auto auto !important;
+        gap: 8px !important;
+        page-break-inside: avoid;
+    }
+    
+    .chart-container {
+        background: white !important;
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        padding: 8px !important;
+        height: 250px !important;
+    }
+    
+    .chart-container.tall {
+        grid-row: span 1 !important;
+        height: 300px !important;
+    }
+    
+    canvas {
+        max-height: 200px !important;
+    }
+    
+    .analysis-container {
+        background: white !important;
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        grid-column: span 3 !important;
+    }
+    
+    .insights-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 8px !important;
+    }
+    
+    .insight-card {
+        background: #f8f8f8 !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+        font-size: 8pt !important;
+    }
+    
+    .dashboard-footer {
+        background: white !important;
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        page-break-before: avoid;
+        margin-top: 15px !important;
+    }
+    
+    /* Hide interactive elements */
+    .filter-indicator,
+    .clear-filters {
+        display: none !important;
+    }
+    
+    /* Ensure text is readable */
+    .chart-header h2,
+    .metric-header h3,
+    .insight-card h3 {
+        color: black !important;
+    }
+    
+    .chart-subtitle,
+    .metric-label,
+    .insight-card p {
+        color: #333 !important;
+    }
+} 
