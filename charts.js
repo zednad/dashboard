@@ -230,7 +230,7 @@ class ChartManager {
         } else {
             const bankColors = {
                 'ANZ': '#1f77b4',
-                'Commbank': '#ff7f0e',
+                'Commbank': '#FFD700',
                 'NAB': '#d62728', 
                 'Westpac': '#2ca02c'
             };

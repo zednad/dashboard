@@ -255,7 +255,7 @@ class BankAnalytics {
         const backgroundColors = data.banks.map(bank => {
             const colors = {
                 'ANZ': '#1f77b4',
-                'Commbank': '#ff7f0e', 
+                'Commbank': '#FFD700', 
                 'NAB': '#d62728',
                 'Westpac': '#2ca02c'
             };
@@ -326,7 +326,7 @@ class BankAnalytics {
             
             const bankColors = {
                 ANZ: '#1f77b4',
-                Commbank: '#ff7f0e', 
+                Commbank: '#FFD700', 
                 NAB: '#d62728',
                 Westpac: '#2ca02c'
             };
@@ -572,7 +572,7 @@ class BankAnalytics {
         const backgroundColors = labels.map(bank => {
             const colors = {
                 'ANZ': '#1f77b4',
-                'Commbank': '#ff7f0e',
+                'Commbank': '#FFD700',
                 'NAB': '#d62728',
                 'Westpac': '#2ca02c'
             };

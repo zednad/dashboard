@@ -195,13 +195,13 @@ body {
 }
 
 .metric-card.commbank-card {
-    border-left: 4px solid #ff7f0e;
+    border-left: 4px solid #FFD700;
 }
 
 .metric-card.commbank-card.selected {
     background: #fff8f0;
-    border-color: #ff7f0e;
-    box-shadow: 0 0 0 1px #ff7f0e;
+    border-color: #FFD700;
+    box-shadow: 0 0 0 1px #FFD700;
 }
 
 .metric-card.nab-card {
