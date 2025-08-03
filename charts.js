@@ -66,7 +66,7 @@ class ChartManager {
         this.createInfraOutageMinutesChart();
     }
     
-    // Create horizontal outage distribution bar chart
+    // Create outage distribution pie chart
     createOutageDistributionChart() {
         const ctx = document.getElementById('outageDistributionChart').getContext('2d');
         const data = window.analytics.getOutageDistribution();
@@ -76,11 +76,11 @@ class ChartManager {
         }
         
         this.charts.outageDistribution = new Chart(ctx, {
-            type: 'bar',
+            type: 'pie',
             data: data,
             options: {
-                indexAxis: 'y', // This makes it horizontal
-                ...this.defaultOptions,
+                responsive: true,
+                maintainAspectRatio: false,
                 onClick: (event, elements) => {
                     if (elements.length > 0) {
                         const dataIndex = elements[0].index;
@@ -96,46 +96,29 @@ class ChartManager {
                     }
                 },
                 plugins: {
-                    ...this.defaultOptions.plugins,
                     legend: {
-                        display: false
+                        position: 'right',
+                         labels: {
+                            usePointStyle: true,
+                            padding: 20,
+                            font: {
+                                size: 12,
+                                weight: '500'
+                            }
+                        }
                     },
                     tooltip: {
                         ...this.defaultOptions.plugins.tooltip,
                         callbacks: {
                             label: function(context) {
-                                return `${context.label}: ${context.parsed.x} outages`;
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                return `${label}: ${value} outages (${percentage}%)`;
                             },
                             afterLabel: function() {
                                 return 'Click to focus on this bank';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    ...this.defaultOptions.scales,
-                    x: {
-                        ...this.defaultOptions.scales.x,
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Total Outages',
-                            color: '#666',
-                            font: {
-                                size: 10,
-                                weight: '600'
-                            }
-                        }
-                    },
-                    y: {
-                        ...this.defaultOptions.scales.y,
-                        title: {
-                            display: true,
-                            text: 'Banks',
-                            color: '#666',
-                            font: {
-                                size: 10,
-                                weight: '600'
                             }
                         }
                     }

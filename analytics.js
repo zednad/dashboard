@@ -244,7 +244,7 @@ class BankAnalytics {
         return metrics;
     }
 
-    // Get outage distribution data for bar chart (was pie chart)
+    // Get outage distribution data for pie chart
     getOutageDistribution() {
         const data = this.getFilteredData();
         
