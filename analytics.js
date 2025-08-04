@@ -209,6 +209,7 @@ class BankAnalytics {
             metrics[bank.toLowerCase()] = {
                 currentOutages: totalOutages,
                 rate: rate + '%',
+                totalPossibleOutages: totalPossible,
                 totalServices: availableServicesCount,
                 totalQuarters: filteredData.quarters.length,
                 availableServices: this.filters.service ? [this.filters.service] : allData.bankTotals[bank].availableServices

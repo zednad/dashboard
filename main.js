@@ -221,7 +221,13 @@ class DashboardManager {
                 const totalElement = document.getElementById(`${bank}-total-outages`);
                 
                 if (rateElement) rateElement.textContent = bankMetrics.rate;
-                if (totalElement) totalElement.textContent = `${bankMetrics.currentOutages} total outages`;
+                if (totalElement) {
+                    if (bankMetrics.totalPossibleOutages && bankMetrics.totalPossibleOutages > 0) {
+                        totalElement.textContent = `${bankMetrics.currentOutages} outages out of ${bankMetrics.totalPossibleOutages}`;
+                    } else {
+                        totalElement.textContent = `${bankMetrics.currentOutages} outages`;
+                    }
+                }
             }
         });
         
