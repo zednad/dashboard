@@ -92,7 +92,10 @@ class ChartManager {
                         } else {
                             window.analytics.setViewMode(bankName);
                         }
-                        window.dashboardManager.updateAllData();
+                        // Delay dashboard update until after current event loop to avoid destroying the chart mid-handler
+                        setTimeout(() => {
+                            window.dashboardManager.updateAllData();
+                        }, 0);
                     }
                 },
                 plugins: {
@@ -152,7 +155,10 @@ class ChartManager {
                         } else {
                             window.analytics.setQuarter(quarter);
                         }
-                        window.dashboardManager.updateAllData();
+                        // Delay dashboard update to avoid destroying chart mid-handler
+                        setTimeout(() => {
+                            window.dashboardManager.updateAllData();
+                        }, 0);
                     }
                 },
                 plugins: {
@@ -253,9 +259,13 @@ class ChartManager {
 
                         // Toggle service filter
                         if (window.analytics.filters.service === serviceName) {
-                            window.dashboardManager.setService(null);
+                            setTimeout(() => {
+                                window.dashboardManager.setService(null);
+                            }, 0);
                         } else {
-                            window.dashboardManager.setService(serviceName);
+                            setTimeout(() => {
+                                window.dashboardManager.setService(serviceName);
+                            }, 0);
                         }
                     }
                 },

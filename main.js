@@ -251,7 +251,7 @@ class DashboardManager {
         container.innerHTML = '';
         insights.forEach((insight, index) => {
             const insightCard = document.createElement('div');
-            insightCard.className = `insight-card insight-${insight.type}`;
+            insightCard.className = `insight-card ${insight.type}`;
             
             insightCard.innerHTML = `
                 <div class="insight-header">
@@ -368,4 +368,4 @@ window.addEventListener('error', function(event) {
 window.addEventListener('unhandledrejection', function(event) {
     console.error('Unhandled promise rejection:', event.reason);
     event.preventDefault();
-}); 
+});
