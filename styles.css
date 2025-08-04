@@ -1,4 +1,19 @@
 /* Reset and Base Styles */
+/* --- Modern theme variables & font --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --primary: #106ebe;
+    --primary-dark: #0a4e8a;
+    --accent: #d13438;
+    --bg: #f5f6f8;
+    --card-bg: #ffffff;
+    --text: #212529;
+    --muted-text: #666;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 3px 10px rgba(0,0,0,0.12);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,9 +21,9 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f9fa;
-    color: #212529;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     line-height: 1.4;
     min-height: 100vh;
     overflow-x: auto;
@@ -729,4 +744,47 @@ body {
     .insight-card p {
         color: #333 !important;
     }
+} 
+
+/* -------- Visual Polish Overrides (non-breaking) -------- */
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.metric-card,
+.chart-container,
+.dashboard-header {
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+}
+
+.metric-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.chart-container {
+    background: var(--card-bg);
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 0.2s ease;
+}
+
+.chart-container:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.chart-header h2 {
+    color: var(--primary-dark);
+}
+
+.clear-filters {
+    background: var(--accent);
+}
+
+/* improved scrollbar */
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
 } 
