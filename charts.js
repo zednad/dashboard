@@ -64,6 +64,7 @@ class ChartManager {
         this.createServicesChart();
         this.createBankOutageMinutesChart();
         this.createInfraOutageMinutesChart();
+        this.createOutageMinutesDetailChart();
     }
     
     // Create outage distribution pie chart
@@ -395,6 +396,89 @@ class ChartManager {
                         }
                     },
                     x: { ...this.defaultOptions.scales.x }
+                }
+            }
+        });
+    }
+    
+    // Detailed stacked horizontal bar chart for significant outage minutes (Bank vs Infrastructure)
+    createOutageMinutesDetailChart() {
+        const canvas = document.getElementById('outageMinutesDetailChart');
+        if (!canvas) return; // Container may be hidden on small screens
+        const ctx = canvas.getContext('2d');
+        const bankFaultData = window.analytics.getBankOutageMinutes();
+        const infraFaultData = window.analytics.getInfraOutageMinutes();
+        const labels = bankFaultData.labels;
+    
+        // Combine datasets for stacked bar
+        const combinedData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Bank Fault',
+                    data: bankFaultData.datasets[0].data,
+                    backgroundColor: '#d62728'
+                },
+                {
+                    label: 'Infrastructure',
+                    data: infraFaultData.datasets[0].data,
+                    backgroundColor: '#1f77b4'
+                }
+            ]
+        };
+    
+        if (this.charts.outageMinutesDetail) {
+            this.charts.outageMinutesDetail.destroy();
+        }
+    
+        this.charts.outageMinutesDetail = new Chart(ctx, {
+            type: 'bar',
+            data: combinedData,
+            options: {
+                ...this.defaultOptions,
+                indexAxis: 'y', // horizontal bars
+                plugins: {
+                    ...this.defaultOptions.plugins,
+                    tooltip: {
+                        ...this.defaultOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.parsed.x.toLocaleString()} minutes`;
+                            },
+                            afterLabel: function() {
+                                return 'Click to focus on this bank';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Significant Outage Minutes',
+                            color: '#666',
+                            font: { size: 10, weight: '600' }
+                        }
+                    },
+                    y: {
+                        stacked: true
+                    }
+                },
+                onClick: (event, elements) => {
+                    if (elements.length > 0) {
+                        const dataIndex = elements[0].index;
+                        const bankName = labels[dataIndex];
+                        // Toggle between specific bank and big4 view
+                        if (window.analytics.filters.viewMode === bankName) {
+                            window.analytics.setViewMode('big4');
+                        } else {
+                            window.analytics.setViewMode(bankName);
+                        }
+                        setTimeout(() => {
+                            window.dashboardManager.updateAllData();
+                        }, 0);
+                    }
                 }
             }
         });
