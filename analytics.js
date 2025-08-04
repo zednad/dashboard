@@ -599,6 +599,99 @@ class BankAnalytics {
     getInfraOutageMinutes() {
         return this.getOutageMinutes('outageInfra');
     }
+   
+    // NEW: trend of outage minutes (bank fault) across quarters for each bank
+    getBankOutageMinutesTrend() {
+        const trendData = {
+            labels: this.data.quarters,
+            datasets: []
+        };
+
+        const bankColors = {
+            ANZ: '#1f77b4',
+            Commbank: '#FFD700',
+            NAB: '#d62728',
+            Westpac: '#2ca02c'
+        };
+
+        const processed = this.data.processedData;
+
+        // Helper to calculate outage minutes for a given bank across quarters
+        const calcSeries = (bank) => {
+            return this.data.quarters.map(quarter => {
+                let total = 0;
+                if (!processed[bank] || !processed[bank][quarter]) return 0;
+
+                const servicesToUse = this.filters.service ? [this.filters.service] : this.data.services;
+
+                servicesToUse.forEach(service => {
+                    if (processed[bank][quarter][service]) {
+                        total += processed[bank][quarter][service].outageBank || 0;
+                    }
+                });
+                return total;
+            });
+        };
+
+        // Build Big 4 average series first (we might need it in all cases)
+        const big4Series = this.data.quarters.map((quarter, idx) => {
+            let total = 0;
+            let banksCount = 0;
+            ['ANZ', 'Commbank', 'NAB', 'Westpac'].forEach(bank => {
+                const series = calcSeries(bank);
+                total += series[idx];
+                banksCount++;
+            });
+            return banksCount > 0 ? total / banksCount : 0;
+        });
+
+        // Determine what to show
+        if (this.filters.viewMode === 'big4') {
+            // Only Big 4 average line
+            trendData.datasets.push({
+                label: 'Big 4 Avg',
+                data: big4Series,
+                borderColor: '#106ebe',
+                backgroundColor: '#106ebe20',
+                tension: 0.3,
+                fill: false,
+                // Solid line when only Big 4 average is shown
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                borderWidth: 2
+            });
+        } else {
+            const bank = this.filters.viewMode; // selected bank
+            const series = calcSeries(bank);
+            trendData.datasets.push({
+                label: bank,
+                data: series,
+                borderColor: bankColors[bank] || '#106ebe',
+                backgroundColor: (bankColors[bank] || '#106ebe') + '20',
+                tension: 0.3,
+                fill: false,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                borderWidth: 2
+            });
+
+            // plus Big 4 average
+            trendData.datasets.push({
+                label: 'Big 4 Avg',
+                data: big4Series,
+                borderColor: '#106ebe',
+                backgroundColor: '#106ebe20',
+                tension: 0.3,
+                fill: false,
+                borderDash: [6, 4],
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                borderWidth: 2
+            });
+        }
+
+        return trendData;
+    }
 }
 
 // Initialize analytics

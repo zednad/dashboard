@@ -321,40 +321,67 @@ class ChartManager {
     
     createBankOutageMinutesChart() {
         const ctx = document.getElementById('bankOutageMinutesChart').getContext('2d');
-        const data = window.analytics.getBankOutageMinutes();
+        const data = window.analytics.getBankOutageMinutesTrend();
 
         if (this.charts.bankOutageMinutes) {
             this.charts.bankOutageMinutes.destroy();
         }
 
         this.charts.bankOutageMinutes = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: data,
             options: {
                 ...this.defaultOptions,
                 plugins: {
                     ...this.defaultOptions.plugins,
-                    legend: { display: false },
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20,
+                            font: { size: 12, weight: '500' }
+                        }
+                    },
                     tooltip: {
                         ...this.defaultOptions.plugins.tooltip,
                         callbacks: {
                             label: function(context) {
-                                return `${context.label}: ${context.parsed.y.toLocaleString()} minutes`;
+                                return `${context.dataset.label}: ${context.parsed.y.toLocaleString()} minutes`;
+                            },
+                            afterLabel: function() {
+                                return 'Click to focus on this quarter';
                             }
                         }
                     }
                 },
                 scales: {
+                    ...this.defaultOptions.scales,
                     y: {
                         ...this.defaultOptions.scales.y,
+                        beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Total Minutes',
+                            text: 'Outage Minutes',
                             color: '#666',
                             font: { size: 10, weight: '600' }
                         }
                     },
                     x: { ...this.defaultOptions.scales.x }
+                },
+                onClick: (event, elements) => {
+                    if (elements.length > 0) {
+                        const dataIndex = elements[0].index;
+                        const quarter = data.labels[dataIndex];
+                        // Toggle quarter filter
+                        if (window.analytics.filters.quarter === quarter) {
+                            window.analytics.setQuarter(null);
+                        } else {
+                            window.analytics.setQuarter(quarter);
+                        }
+                        setTimeout(() => {
+                            window.dashboardManager.updateAllData();
+                        }, 0);
+                    }
                 }
             }
         });
